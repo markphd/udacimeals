@@ -43,17 +43,21 @@ function calendar (state = initialCalendarState, action) {
 
     switch (action.type) {
         case ADD_RECIPE:
-            return ...state,
+            return {
+                ...state,
                 [day]: {
                     ...state[day],
                     [meal]: recipe.label,
                 }
-        case REMOVE_FROM_CALENDAR
-            return ...state,
+            }
+        case REMOVE_FROM_CALENDAR:
+            return {
+                ...state,
                 [day]: {
                     ...state[day],
                     [meal]: null,
                 }
+            }
         default:
             return state
     }
