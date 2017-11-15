@@ -16,18 +16,24 @@ class App extends Component {
   }
 }
 
-function mapStateToProps(calendar) {
+function mapStateToProps ({ food, calendar }) {
   const dayOrder = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
 
   return {
     calendar: dayOrder.map((day) => ({
       day,
-      meals: Object.assign({}, calendar[day])
-    }))
+      meals: Object.keys(calendar[day]).reduce((meals, meal) => {
+        meals[meal] = calendar[day][meal]
+          ? food[calendar[day][meal]]
+          : null
+
+        return meals
+      }, {})
+    })),
   }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     selectRecipe: (data) => dispatch(addRecipe(data)),
     remove: (data) => dispatch(removeFromCalendar(data))
